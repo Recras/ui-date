@@ -25,6 +25,25 @@ angular.module('ui.date', [])
         var showing = false;
         var opts = getOptions();
 
+        function setVal() {
+          var keys = ['Hours', 'Minutes', 'Seconds', 'Milliseconds'],
+              isDate = controller.$viewValue instanceof Date,
+              preserve = {};
+
+          if (isDate) {
+            angular.forEach(keys, function(key) {
+              preserve[key] = controller.$viewValue['get' + key]();
+            });
+          }
+          controller.$setViewValue(element.datepicker("getDate"));
+
+          if (isDate) {
+            angular.forEach(keys, function(key) {
+               controller.$viewValue['set' + key](preserve[key]);
+            });
+          }
+        }
+
         // If we have a controller (i.e. ngModelController) then wire it up
         if (controller) {
 
@@ -34,7 +53,7 @@ angular.module('ui.date', [])
           opts.onSelect = function (value, picker) {
             scope.$apply(function() {
               showing = true;
-              controller.$setViewValue(element.datepicker("getDate"));
+              setVal();
               _onSelect(value, picker);
               element.blur();
             });
@@ -49,7 +68,7 @@ angular.module('ui.date', [])
             if ( !showing ) {
               scope.$apply(function() {
                 element.datepicker("setDate", element.datepicker("getDate"));
-                controller.$setViewValue(element.datepicker("getDate"));
+                setVal();
               });
             }
           });
