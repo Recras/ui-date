@@ -17,5 +17,6 @@
 <body ng-app="ui.date">
   <label>Select Date: <input type="text" ui-date ng-model="aDate"></label>
   <div>{{aDate}}</div>
+  <div><a href="" ng-click="aDate.setDate(aDate.getDate()+1);">Increase Date</a></div>
 </body>
 </html>

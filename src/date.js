@@ -62,6 +62,14 @@ angular.module('ui.date', [])
             }
             element.datepicker("setDate", date);
           };
+
+          scope.$watch(attrs.ngModel, function() {
+            var date = controller.$viewValue;
+            if ( angular.isDefined(date) && date !== null && !angular.isDate(date) ) {
+              return;
+            }
+            controller.$render();
+          }, true);
         }
         // If we don't destroy the old one it doesn't update properly when the config changes
         element.datepicker('destroy');
