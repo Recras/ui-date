@@ -27,12 +27,12 @@ angular.module('ui.date', [])
 
         function setVal() {
           var keys = ['Hours', 'Minutes', 'Seconds', 'Milliseconds'],
-              isDate = controller.$viewValue instanceof Date,
+              isDate = angular.isDate(controller.$modelValue),
               preserve = {};
 
           if (isDate) {
             angular.forEach(keys, function(key) {
-              preserve[key] = controller.$viewValue['get' + key]();
+              preserve[key] = controller.$modelValue['get' + key]();
             });
           }
           controller.$setViewValue(element.datepicker("getDate"));
