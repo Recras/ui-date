@@ -94,7 +94,7 @@ angular.module('ui.date', [])
           };
 
           scope.$watch(attrs.ngModel, function() {
-            var date = controller.$viewValue;
+            var date = controller.$modelValue;
             if ( angular.isDefined(date) && date !== null && !angular.isDate(date) ) {
               return;
             }
